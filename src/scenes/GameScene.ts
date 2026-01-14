@@ -14,8 +14,6 @@ import {
   BOARD_OFFSET_X,
   BOARD_OFFSET_Y,
   TILE_SIZE,
-  BOARD_COLS,
-  BOARD_ROWS,
   DEFAULT_TIME_LIMIT,
   COLOR_PRIMARY,
   COLOR_SECONDARY,
@@ -159,9 +157,6 @@ export class GameScene extends Scene {
     this.timeRemaining -= deltaTime / 1000;
     if (this.timeRemaining <= 0) {
       this.timeRemaining = 0;
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/22845485-8f4a-4699-8df5-df420e89716b',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'GameScene.ts:update',message:'Timer reached 0, calling endGame',data:{timeRemaining:this.timeRemaining,score:this.scoreSystem.getScore()},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A'})}).catch(()=>{});
-      // #endregion
       this.endGame();
       return;
     }
@@ -184,17 +179,11 @@ export class GameScene extends Scene {
    * End the game
    */
   private endGame(): void {
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/22845485-8f4a-4699-8df5-df420e89716b',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'GameScene.ts:endGame',message:'endGame called',data:{score:this.scoreSystem.getScore(),isGameOver:this.isGameOver},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A,B'})}).catch(()=>{});
-    // #endregion
     this.isGameOver = true;
     
     // Switch to result scene after a short delay
     setTimeout(() => {
       const resultScene = this.game.getSceneManager().getScene('result');
-      // #region agent log
-      fetch('http://127.0.0.1:7242/ingest/22845485-8f4a-4699-8df5-df420e89716b',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'GameScene.ts:endGame:setTimeout',message:'Switching to result scene',data:{resultSceneFound:!!resultScene,finalScore:this.scoreSystem.getScore()},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B'})}).catch(()=>{});
-      // #endregion
       if (resultScene) {
         (resultScene as any).setScore(this.scoreSystem.getScore());
       }

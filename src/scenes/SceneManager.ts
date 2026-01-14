@@ -2,18 +2,16 @@
  * Scene Manager - handles scene transitions and lifecycle
  */
 
-import type { Game } from '../core/Game';
 import type { Scene } from './Scene';
 import type { SceneName } from '../utils/types';
 
 export class SceneManager {
-  private game: Game;
   private scenes: Map<SceneName, Scene> = new Map();
   private currentScene: Scene | null = null;
   private currentSceneName: SceneName | null = null;
 
-  constructor(game: Game) {
-    this.game = game;
+  constructor(_game: unknown) {
+    // Game reference reserved for future use
   }
 
   /**

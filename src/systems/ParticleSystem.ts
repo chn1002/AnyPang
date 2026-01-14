@@ -2,7 +2,6 @@
  * Particle System - handles visual particle effects
  */
 
-import { Position } from '../utils/types';
 import { TILE_COLORS } from '../utils/constants';
 
 interface Particle {

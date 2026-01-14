@@ -5,7 +5,6 @@
 import { Position, BoardPosition } from '../utils/types';
 import { 
   CANVAS_WIDTH, 
-  CANVAS_HEIGHT, 
   BOARD_OFFSET_X, 
   BOARD_OFFSET_Y, 
   TILE_SIZE, 

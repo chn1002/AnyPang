@@ -16,7 +16,6 @@ import {
   FALL_DURATION_PER_CELL,
   DESTROY_DURATION,
   SPAWN_DURATION,
-  COLOR_BACKGROUND,
 } from '../utils/constants';
 
 export type BoardCallback = () => void;
@@ -415,9 +414,6 @@ export class Board {
    */
   private checkCascade(): void {
     const matches = this.findMatches();
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/22845485-8f4a-4699-8df5-df420e89716b',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Board.ts:checkCascade',message:'Cascade check',data:{matchCount:matches.length,comboCount:this.comboCount},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'C'})}).catch(()=>{});
-    // #endregion
     
     if (matches.length > 0) {
       // Continue cascade
