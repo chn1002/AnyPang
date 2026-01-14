@@ -26,15 +26,8 @@ export default defineConfig({
     // Target modern browsers
     target: 'es2020',
     
-    // Minification
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        // Remove console.log in production
-        drop_console: true,
-        drop_debugger: true,
-      },
-    },
+    // Minification (use esbuild for faster builds and no extra dependency)
+    minify: 'esbuild',
     
     // Generate source maps for debugging
     sourcemap: false,

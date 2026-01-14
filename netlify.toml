@@ -3,8 +3,8 @@
 
 # Build settings
 [build]
-  # Build command
-  command = "npm run build"
+  # Build command (use npm ci with dev deps to ensure tsc is available)
+  command = "npm ci --include=dev && npm run build"
   
   # Directory to publish (Vite outputs to 'dist')
   publish = "dist"
