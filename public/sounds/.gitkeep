@@ -1,0 +1,7 @@
+# This file keeps the sounds directory in git
+# Add your game sounds here:
+# - match.mp3 (tile match sound)
+# - swap.mp3 (tile swap sound)
+# - combo.mp3 (combo sound effect)
+# - bgm.mp3 (background music)
+# - game-over.mp3

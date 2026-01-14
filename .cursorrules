@@ -1,0 +1,174 @@
+# AnyPang - Web-based Match-3 Puzzle Game Development Rules
+
+## Project Overview
+- **Project Name**: AnyPang
+- **Type**: Web-based Match-3 Puzzle Game
+- **Tech Stack**: TypeScript + HTML5 Canvas + Vite
+- **Deployment**: Netlify (Static Site Hosting)
+
+## Language Requirements
+- All code comments MUST be written in English
+- Variable names, function names, and identifiers in English
+- Documentation in English
+- Communication with AI assistant in Korean
+
+## Code Style & Naming Conventions
+
+### TypeScript/JavaScript
+- **Classes, Types, Interfaces**: PascalCase (e.g., `GameBoard`, `TileType`, `IScene`)
+- **Variables, Functions, Methods**: camelCase (e.g., `currentScore`, `handleClick`, `updateBoard`)
+- **Constants**: UPPER_SNAKE_CASE (e.g., `MAX_TILES`, `BOARD_WIDTH`, `ANIMATION_DURATION`)
+- **File Names**: PascalCase matching class name (e.g., `GameBoard.ts`, `TileManager.ts`)
+- **Enum Values**: PascalCase (e.g., `TileType.Red`, `GameState.Playing`)
+
+### File Organization
+```
+src/
+├── core/       # Game engine core (Game loop, Canvas, Input)
+├── entities/   # Game objects (Board, Tile, Effect)
+├── scenes/     # Game scenes (Menu, Game, Result)
+├── systems/    # Game systems (Match, Score, Animation)
+├── utils/      # Utilities (constants, types, helpers)
+├── assets/     # Asset loaders
+└── main.ts     # Entry point
+```
+
+## Game Architecture Principles
+
+### Game Loop
+- Use `requestAnimationFrame` for smooth rendering
+- Separate `update(deltaTime)` and `render(ctx)` methods
+- Target 60 FPS with fixed timestep for physics/logic
+- Never use `setInterval` for game loops
+
+### Scene Management
+- Each scene extends base `Scene` class
+- Scenes have lifecycle methods: `enter()`, `update()`, `render()`, `exit()`
+- Use scene manager for transitions
+- Clean up resources on scene exit
+
+### Entity Pattern
+- Entities have `update(deltaTime)` and `render(ctx)` methods
+- Use composition over inheritance where possible
+- Implement object pooling for frequently created/destroyed objects (tiles, effects)
+
+### State Management
+- Centralized game state
+- Immutable state updates where practical
+- Clear state transitions with defined actions
+
+## Canvas & Rendering Rules
+
+### Canvas Setup
+- Support dynamic canvas resizing for responsive design
+- Use device pixel ratio for crisp rendering on high-DPI displays
+- Clear canvas each frame before rendering
+
+### Rendering Best Practices
+- Batch similar draw calls together
+- Use sprite sheets for animations
+- Implement dirty flag pattern to skip unnecessary renders
+- Cache static elements on offscreen canvas if needed
+
+## Input Handling
+
+### Mouse & Touch Support
+- Handle both mouse and touch events
+- Implement proper touch event handling for mobile
+- Use pointer events where supported for unified handling
+- Prevent default touch behaviors (scrolling, zooming) on game canvas
+
+### Input Processing
+- Queue input events, process in update loop
+- Debounce rapid inputs if needed
+- Provide visual feedback for all interactions
+
+## Performance Guidelines
+
+### Memory Management
+- Use object pooling for tiles and effects
+- Avoid creating objects in hot paths (game loop)
+- Clean up event listeners on scene/component destruction
+- Preload all assets before gameplay
+
+### Optimization
+- Minimize DOM manipulation during gameplay
+- Use `transform` and `opacity` for CSS animations
+- Profile before optimizing - measure first
+- Keep bundle size minimal for fast loading
+
+## Asset Management
+
+### Images
+- Store in `public/images/`
+- Use PNG for sprites with transparency
+- Optimize images before committing (compress, resize)
+- Use sprite sheets for related images
+
+### Sounds
+- Store in `public/sounds/`
+- Use MP3 or OGG format for broad compatibility
+- Keep audio files small (< 100KB per effect)
+- Preload critical sounds
+
+### Fonts
+- Store in `public/fonts/`
+- Use WOFF2 format for best compression
+- Provide fallback fonts in CSS
+
+## Build & Deployment (Netlify)
+
+### Build Configuration
+- Build command: `npm run build`
+- Output directory: `dist/`
+- Node version: 20.x
+
+### Environment Variables
+- Use `.env` files for local development
+- Configure production variables in Netlify dashboard
+- Never commit secrets to repository
+
+### Deployment Rules
+- `main` branch deploys to production
+- `develop` branch deploys to preview
+- All PRs get deploy previews automatically
+
+## Testing Guidelines
+
+### Manual Testing
+- Test on Chrome, Firefox, Safari
+- Test on mobile devices (iOS Safari, Android Chrome)
+- Test touch interactions on actual devices
+- Verify responsive behavior at different screen sizes
+
+### Debug Mode
+- Implement debug overlay (FPS counter, state info)
+- Add keyboard shortcuts for debug features
+- Disable debug features in production build
+
+## Error Handling
+
+### General Rules
+- Gracefully handle asset loading failures
+- Show user-friendly error messages
+- Log errors for debugging (remove in production)
+- Implement retry logic for recoverable errors
+
+### Game State Recovery
+- Save game progress to localStorage periodically
+- Handle browser visibility changes (pause on tab switch)
+- Recover gracefully from unexpected state
+
+## Code Quality
+
+### Do's
+- Write self-documenting code with clear names
+- Add comments for complex game logic
+- Keep functions small and focused
+- Use TypeScript strict mode
+
+### Don'ts
+- Don't use `any` type unless absolutely necessary
+- Don't ignore TypeScript errors
+- Don't leave console.log in production code
+- Don't hardcode magic numbers - use constants

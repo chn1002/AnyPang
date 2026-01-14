@@ -1,0 +1,8 @@
+# This file keeps the images directory in git
+# Add your game images here:
+# - tiles.png (sprite sheet for tile types)
+# - background.png
+# - favicon-16x16.png
+# - favicon-32x32.png
+# - apple-touch-icon.png
+# - og-image.png (for social media sharing)

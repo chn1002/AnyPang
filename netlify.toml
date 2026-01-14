@@ -1,0 +1,96 @@
+# Netlify Configuration for AnyPang
+# https://docs.netlify.com/configure-builds/file-based-configuration/
+
+# Build settings
+[build]
+  # Build command
+  command = "npm run build"
+  
+  # Directory to publish (Vite outputs to 'dist')
+  publish = "dist"
+  
+  # Directory for Netlify Functions (if needed in future)
+  # functions = "netlify/functions"
+
+# Build environment variables
+[build.environment]
+  # Node.js version
+  NODE_VERSION = "20"
+  
+  # NPM version (optional)
+  NPM_VERSION = "10"
+
+# Production context
+[context.production]
+  environment = { NODE_ENV = "production" }
+
+# Deploy Preview context
+[context.deploy-preview]
+  environment = { NODE_ENV = "production" }
+
+# Branch deploy context
+[context.branch-deploy]
+  environment = { NODE_ENV = "production" }
+
+# Development context (for Netlify Dev)
+[context.dev]
+  environment = { NODE_ENV = "development" }
+
+# Custom headers for all pages
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Security headers
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    
+    # Permissions Policy (disable unnecessary features for games)
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Cache static assets aggressively (hashed filenames from Vite)
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache JavaScript files
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache CSS files
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache images
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache sounds
+[[headers]]
+  for = "/sounds/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+# Cache fonts
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Redirects (SPA fallback - not needed for single-page game, but useful if routing added later)
+# [[redirects]]
+#   from = "/*"
+#   to = "/index.html"
+#   status = 200
+
+# Plugins (optional, add as needed)
+# [[plugins]]
+#   package = "@netlify/plugin-lighthouse"
